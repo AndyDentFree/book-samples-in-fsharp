@@ -19,19 +19,17 @@ let rec remTuna = function
     | Topping(Tuna,p)    -> remTuna p
     | Topping(t,p)       -> Topping(t,remTuna p)
 
-let eqFish f1 f2 =
-    match f1,f2 with
+let eqFish = function
     | (Anchovy,Anchovy) -> true
     | (Lox,Lox)         -> true
     | (Tuna,Tuna)       -> true
     | (_,_)             -> false
 
-let rec remFish x p =
-    match x,p with
+let rec remFish= function
     | (_,Bottom)         -> Bottom
     | (x',Topping(t,p')) ->
-        if eqFish t x' then remFish x' p'
-        else Topping(t,(remFish x' p'))
+        if eqFish (t, x') then remFish (x', p')
+        else Topping(t,(remFish (x', p')))
 
 let rec remInt (x: int) p =
     match x,p with

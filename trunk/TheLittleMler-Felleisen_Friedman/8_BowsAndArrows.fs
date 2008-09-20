@@ -96,3 +96,32 @@ let prefixer123 l2 =
         Cons(2,
             Cons(3,
                 l2)))
+
+let waitingPrefixer123 l2 =
+    Cons(1,
+        combineC(
+            Cons(2,
+                Cons(3,
+                    Empty)))
+            l2)
+
+let base' l2 =
+    l2
+
+let rec combineS = function
+    | Empty      -> base'
+    | Cons(a,l1) ->
+        makeCons(a,combineS(l1))
+and makeCons (a,f) =
+    let makeCons' l2 =
+        Cons(a,f l2)
+    makeCons'
+
+let prefix3 l2 =
+    Cons(3,base' l2)
+    
+let prefix23 l2 =
+    Cons(2,prefix3 l2)
+
+let prefix123 l2 =
+    Cons(1,prefix23 l2)

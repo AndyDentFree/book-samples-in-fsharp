@@ -9,10 +9,12 @@ let makeTemplates (templateStrings : string seq) =
     
     for template in templateStrings do
         let uriTemplate = new UriTemplate(template)
-        let mutable segment = "ROOT"
-        if uriTemplate.PathSegmentVariableNames.Count > 0 then
-            let lastPathSegment = uriTemplate.PathSegmentVariableNames.Count - 1
-            segment <- uriTemplate.PathSegmentVariableNames.[lastPathSegment]
+        let segment =
+            match uriTemplate.PathSegmentVariableNames.Count with
+            | 0 -> "ROOT"
+            | _ ->
+                let lastPathSegment = uriTemplate.PathSegmentVariableNames.Count - 1
+                uriTemplate.PathSegmentVariableNames.[lastPathSegment]
         let msg = segment + " MATCH!"
         templates.Add(uriTemplate, msg)
         

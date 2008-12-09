@@ -11,19 +11,9 @@ open System.ServiceModel.Channels
 
 
 [<DataContract(Name = "Domain")>]
-type Domain(name : string, uri : string) =
-    let mutable name' = name
-    let mutable uri' = uri
-    
-    [<DataMember>]
-    member this.Name 
-        with get() = name'
-        and set v = name' <- v
-    
-    [<DataMember>]
-    member this.Uri
-        with get() = uri'
-        and set v = uri' <- v
+type Domain =
+    { [<DataMember>] mutable Name : string;
+      [<DataMember>] mutable Uri : string }
 
 
 [<CollectionDataContract(Name = "Domains")>]
@@ -44,7 +34,7 @@ type BioTaxService() =
             let ret = new DomainList()
             [| "Archaea"; "Eubacteria"; "Eukaryota" |]
             |> Seq.iter (fun domain ->
-                ret.Add(Domain(domain, domain)))
+                ret.Add({ Name = domain; Uri = domain }))
             ret
 
 

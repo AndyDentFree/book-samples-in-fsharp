@@ -3,11 +3,9 @@
 #r "System.ServiceModel.Web"
 #r "System.Runtime.Serialization"
 open System
-open System.IO
 open System.Runtime.Serialization
 open System.ServiceModel
 open System.ServiceModel.Web
-open System.ServiceModel.Channels
 
 
 [<DataContract(Name = "Domain")>]

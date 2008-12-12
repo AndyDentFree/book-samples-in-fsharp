@@ -1,0 +1,22 @@
+﻿<%@ ServiceHost Service="SimpleWebHostingIIS.HostingExample" Language="F#" 
+                Factory="SimpleWebHostingIIS.EventHandlingServiceHostFactory" %>
+#light
+namespace SimpleWebHostingIIS
+open System
+open System.Web
+open System.ServiceModel
+open System.ServiceModel.Web
+open System.ServiceModel.Activation
+
+
+[<ServiceContract>]
+[<AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)>]
+type HostingExample() =
+    [<OperationContract>]
+    [<WebGet(UriTemplate = "*")>]
+    member this.TheMethod() =
+        let mutable ret = "Just testing service hosting"
+        if HttpContext.Current <> null then
+            ret <- ret + " and HttpContext.Current isn't null!!!"
+        ret
+    

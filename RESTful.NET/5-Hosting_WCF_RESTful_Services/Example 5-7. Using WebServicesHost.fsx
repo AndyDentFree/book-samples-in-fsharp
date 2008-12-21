@@ -22,6 +22,8 @@ let mutable openSucceeded = false
 try
     try
         sh.Open()
+        for ep in sh.Description.Endpoints do
+            printfn "%A" ep.ListenUri
         openSucceeded <- true
     with ex ->
         printfn "ServiceHost failed to open %s" (ex.ToString())

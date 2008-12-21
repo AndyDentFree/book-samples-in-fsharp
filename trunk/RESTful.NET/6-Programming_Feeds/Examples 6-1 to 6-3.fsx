@@ -14,7 +14,7 @@ let feed = new SyndicationFeed()
 feed.Title <- new TextSyndicationContent(sprintf "%s %s EventLog Feed" Environment.MachineName el.Log)
 feed.Description <- new TextSyndicationContent("A feed of data from the EventLog")
 feed.Authors.Add(new SyndicationPerson(Name = Environment.MachineName))
-feed.Id = "urn:uuid" + Environment.MachineName + el.Log
+feed.Id <- "urn:uuid" + Environment.MachineName + el.Log
 
 // Example 5-2. Defining and populating a List of SyndicationItem
 let items = new List<SyndicationItem>()

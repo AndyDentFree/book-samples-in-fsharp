@@ -28,6 +28,6 @@ host.AddServiceEndpoint(typeof<IMyContract>, tcpBinding, "net.tcp://localhost:80
 host.AddServiceEndpoint(typeof<IMyContract>, tcpBinding, "net.tcp://localhost:8002/MyService")
 
 host.Open()
-printfn "Service Opened...\nPress any key to end..."
+printfn "Service Opened, press any key to end..."
 Console.ReadKey(true) |> ignore
 host.Close()

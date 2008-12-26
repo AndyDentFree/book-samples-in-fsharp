@@ -14,16 +14,31 @@ type Domain =
       [<DataMember>] mutable Uri : string }
 
 
+[<DataContract(Name = "Kingdom")>]
+type Kingdom =
+    { [<DataMember>] mutable Name : string;
+      [<DataMember>] mutable Uri : string }
+
+
 [<CollectionDataContract(Name = "Domains")>]
 type DomainList() =
     inherit ResizeArray<Domain>()
 
+
+[<CollectionDataContract(Name = "Kingdoms")>]
+type KingdomList() =
+    inherit ResizeArray<Kingdom>()
+    
 
 [<ServiceContract>]
 type IBioTaxService =
     [<OperationContract>]
     [<WebGet(UriTemplate = "/")>]
     abstract GetRoot : unit -> DomainList
+    
+    [<OperationContract>]
+    [<WebGet(UriTemplate = "/{domain}")>]
+    abstract GetKingdoms : domain : string -> KingdomList
     
 
 type BioTaxService() =
@@ -34,12 +49,18 @@ type BioTaxService() =
             |> Seq.iter (fun domain ->
                 ret.Add({ Name = domain; Uri = domain }))
             ret
+        
+        member this.GetKingdoms(domain) =
+            let ret = new KingdomList()
+            for i in [1..5] do
+                ret.Add({ Name = domain + string i; Uri = domain + string i })
+            ret
 
 
 let binding = new WebHttpBinding()
-let baseAddresses : Uri[] = [| |]
-let sh = new WebServiceHost(typeof<BioTaxService>, baseAddresses)
-sh.AddServiceEndpoint(typeof<IBioTaxService>, binding, "http://localhost")
+let uri = new Uri("http://localhost/BioService")
+let sh = new WebServiceHost(typeof<BioTaxService>, [| uri |])
+sh.AddServiceEndpoint(typeof<IBioTaxService>, binding, "")
 sh.Open()
 printfn "Simple HTTP Service Listening"
 printfn "Press enter to stop service"

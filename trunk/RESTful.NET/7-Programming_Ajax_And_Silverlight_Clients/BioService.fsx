@@ -33,13 +33,21 @@ type KingdomList() =
 [<ServiceContract>]
 type IBioTaxService =
     [<OperationContract>]
-    [<WebGet(UriTemplate = "/")>]
+    [<WebGet(UriTemplate = "/", ResponseFormat = WebMessageFormat.Xml)>]
     abstract GetRoot : unit -> DomainList
     
     [<OperationContract>]
-    [<WebGet(UriTemplate = "/{domain}")>]
-    abstract GetKingdoms : domain : string -> KingdomList
+    [<WebGet(UriTemplate = "/{domain}", ResponseFormat = WebMessageFormat.Xml)>]
+    abstract GetDomain : domain : string -> KingdomList
+
+    [<OperationContract>]
+    [<WebGet(UriTemplate = "/json", ResponseFormat = WebMessageFormat.Json)>]
+    abstract GetRootJSON : unit -> DomainList
     
+    [<OperationContract>]
+    [<WebGet(UriTemplate = "/{domain}/json", ResponseFormat = WebMessageFormat.Json)>]
+    abstract GetDomainJSON : domain : string -> KingdomList
+        
 
 type BioTaxService() =
     interface IBioTaxService with
@@ -50,11 +58,15 @@ type BioTaxService() =
                 ret.Add({ Name = domain; Uri = domain }))
             ret
         
-        member this.GetKingdoms(domain) =
+        member this.GetDomain(domain) =
             let ret = new KingdomList()
             for i in [1..5] do
                 ret.Add({ Name = domain + string i; Uri = domain + string i })
             ret
+        
+        member this.GetRootJSON() = (this :> IBioTaxService).GetRoot()
+        
+        member this.GetDomainJSON(domain) = (this :> IBioTaxService).GetDomain(domain)
 
 
 let binding = new WebHttpBinding()

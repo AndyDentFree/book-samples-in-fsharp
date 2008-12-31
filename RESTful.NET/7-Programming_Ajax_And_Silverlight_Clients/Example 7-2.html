@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Using WCF Service from "AJAX"</title>
+    <script type="text/javascript">
+        window.onload = function() {
+            getDomains();
+        }
+        
+        function getXmlHttp() {
+            var xmlHttp;
+            try {
+                xmlHttp = new XMLHttpRequest();
+            } catch (e) {
+                try {
+                    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    try {
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e) {
+                        alert("this sample only works in browsers with AJAX support");
+                        return false;
+                    }
+                }
+            }
+            return xmlHttp;
+        }
+
+        var serviceUri = "http://localhost/BioService/";
+        function getDomains() {
+            var xmlHttp = getXmlHttp();
+
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4) {
+                    var result = (eval(xmlHttp.responseText));
+                    var domain = null;
+                    var select = document.getElementById("domains");
+                    var opt = null;
+                    var name = null;
+                    var uri = null;
+                    for (var i = 0; i < result.length; i++) {
+                        domain = result[i];
+                        name = domain.Name;
+                        uri = domain.Uri;
+                        opt = new Option(name, uri, false);
+                        select.options[select.options.length] = opt;
+                    }
+                }
+            }
+
+            xmlHttp.open("GET", serviceUri + "json", true);
+            xmlHttp.setRequestHeader("Accept", "application/json");
+            xmlHttp.Send();
+        }
+
+        function selectDomain(el) {
+            var domainUri = serviceUri + el[el.selectedIndex].value + "/json";
+            var xmlHttp = getXmlHttp();
+
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4) {
+                    var result = (eval(xmlHttp.responseText));
+                    var kingdom = null;
+                    var select = document.getElementById("Kingdoms");
+                    var opt = null;
+                    var name = null;
+                    var uri = null;
+                    select.options.length = 0;
+                    for (var i = 0; i < result.length; i++) {
+                        kingdom = result[i];
+                        name = kingdom.Name;
+                        uri = kingdom.Uri;
+                        opt = new Option(name, uri, false);
+                        select.options[select.options.length] = opt;
+                    }
+                }
+            }
+
+            xmlHttp.open("GET", domainUri, true);
+            xmlHttp.setRequestHeader("Accept", "application/json");
+            xmlHttp.send();
+        }
+    </script>
+</head>
+<body onload="getDomains()">
+    <h1>Life classification</h1>
+    <p>
+    Domain:<select id="domains" onchange="selectDomain(this)"></select>
+    </p>
+    <p>
+    Kingdom:<select id="kingdoms"></select>
+    </p>
+</body>
+</html>

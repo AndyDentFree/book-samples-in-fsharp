@@ -1,0 +1,50 @@
+﻿<%@ ServiceHost Service="Example72.BioWrapper" Language="F#" %>
+#light
+namespace Example72
+open System
+open System.Runtime.Serialization
+open System.ServiceModel
+open System.ServiceModel.Web
+
+
+[<DataContract(Name = "Domain")>]
+type Domain =
+    { [<DataMember>] mutable Name : string;
+      [<DataMember>] mutable Uri : string }
+
+
+[<DataContract(Name = "Kingdom")>]
+type Kingdom =
+    { [<DataMember>] mutable Name : string;
+      [<DataMember>] mutable Uri : string }
+
+
+[<CollectionDataContract(Name = "Domains")>]
+type DomainList() =
+    inherit ResizeArray<Domain>()
+
+
+[<CollectionDataContract(Name = "Kingdoms")>]
+type KingdomList() =
+    inherit ResizeArray<Kingdom>()
+    
+
+[<ServiceContract(Namespace = "")>]
+type BioWrapper() =
+    [<OperationContract>]
+    [<WebGet>]
+    member this.GetRoot() =
+        let ret = new DomainList()
+        [| "Archaea"; "Eubacteria"; "Eukaryota" |]
+        |> Seq.iter (fun domain ->
+            ret.Add({ Name = domain; Uri = domain }))
+        ret
+    
+    [<OperationContract>]
+    [<WebGet>]
+    member this.GetDomain(domain) =
+        let ret = new KingdomList()
+        for i in [1..5] do
+            ret.Add({ Name = domain + string i; Uri = domain + string i })
+        ret
+        

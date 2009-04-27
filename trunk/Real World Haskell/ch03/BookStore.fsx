@@ -20,3 +20,10 @@ type BillingInfo =
     | CreditCard of CardNumber * CardHolder * Address
     | CashOnDelivery
     | Invoice of CustomerID
+
+let bookID      (Book(id, title, authors)) = id
+
+let bookTitle   (Book(id, title, authors)) = title
+
+let bookAuthors (Book(id, title, authors)) = authors
+

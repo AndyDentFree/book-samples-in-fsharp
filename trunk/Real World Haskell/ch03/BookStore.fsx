@@ -22,8 +22,14 @@ type BillingInfo =
     | Invoice of CustomerID
 
 let bookID      (Book(id, title, authors)) = id
-
 let bookTitle   (Book(id, title, authors)) = title
-
 let bookAuthors (Book(id, title, authors)) = authors
 
+let nicerID      (Book(id,     _, _      )) = id
+let nicerTitle   (Book( _, title, _      )) = title
+let nicerAuthors (Book( _,     _, authors)) = authors
+
+type Customer = 
+    { CustomerID      : CustomerID;
+      CustomerName    : string;
+      CustomerAddress : Address }

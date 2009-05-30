@@ -1,4 +1,3 @@
-#light
 let myNot = function
     | true  -> false
     | false -> true

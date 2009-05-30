@@ -1,4 +1,3 @@
-#light
 type 'a Maybe = Just of 'a
               | Nothing
 

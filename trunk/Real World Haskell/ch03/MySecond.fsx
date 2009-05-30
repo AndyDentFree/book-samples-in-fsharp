@@ -1,5 +1,3 @@
-#light
-
 let mySecond xs = if List.tl xs = []
                   then failwith "list too short"
                   else List.hd (List.tl xs)

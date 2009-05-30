@@ -1,7 +1,3 @@
-// file: cho1/WC.fsx
-// lines beginning with "//" are comments.
-#light
-
 let lines input =
     System.IO.File.ReadAllLines(input)
 

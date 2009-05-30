@@ -1,5 +1,3 @@
-#light
-
 let putStrln (s : string) = System.Console.WriteLine(s)
 let readFile file         = System.IO.File.ReadAllLines(file)
 let writeFile file lines  = System.IO.File.WriteAllLines(file, lines)

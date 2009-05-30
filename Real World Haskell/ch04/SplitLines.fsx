@@ -1,8 +1,7 @@
-#light
 open System
 
 let break' (f : 'a -> bool) (xs : 'a list) =
-    let i = List.tryfind_index f xs
+    let i = List.tryFindIndex f xs
     match i with
     | None   -> (xs, [])
     | Some i -> (Seq.take i xs |> Seq.to_list, Seq.skip i xs |> Seq.to_list)

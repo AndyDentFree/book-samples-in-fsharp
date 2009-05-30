@@ -1,4 +1,3 @@
-#light
 let third (a, b, c) = c
 
 // F# gives compiler warnings on incomplete matches

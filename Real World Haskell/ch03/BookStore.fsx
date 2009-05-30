@@ -1,5 +1,4 @@
 // file: ch03/BookStore.fsx
-#light
 
 type BookInfo = Book of int64 * string * string list
 

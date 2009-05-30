@@ -1,5 +1,3 @@
-#light
-
 type Roygbiv = Red
              | Orange
              | Yellow

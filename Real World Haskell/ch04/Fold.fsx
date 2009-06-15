@@ -5,3 +5,4 @@ let rec foldl step zero = function
 let step acc x = acc + x
 let foldSum xs = foldl step 0 xs
 
+let niceSum xs = foldl (+) 0 xs

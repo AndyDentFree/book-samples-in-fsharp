@@ -1,9 +1,9 @@
 type Doc = Empty
-                  | Char of char
-                  | Text of string
-                  | Line
-                  | Concat of Doc * Doc
-                  | Union of Doc * Doc
+         | Char of char
+         | Text of string
+         | Line
+         | Concat of Doc * Doc
+         | Union of Doc * Doc
 
 let empty = Empty
 

@@ -1,5 +1,5 @@
 #load "2.1 Stack.fs"
-open Persistence
+open Stack
 
 // Exercise ListStack
 let s1 = ListStack.empty

@@ -1,4 +1,4 @@
-namespace Persistence
+namespace Stack
 
 module ListStack =
     type 'a Stack = 'a list
